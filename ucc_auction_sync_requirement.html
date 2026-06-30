@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UCC海外站 · 竞价大厅车源同步需求说明</title>
+  <style>
+    :root{--bg:#f6f8fb;--panel:#fff;--text:#1f2937;--muted:#6b7280;--line:#e5e7eb;--primary:#2563eb;--primary2:#eff6ff;--warning:#fff7ed;--danger:#fef2f2;--success:#ecfdf5}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:14px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",Arial,sans-serif}
+    .layout{display:flex;min-height:100vh}.sidebar{position:fixed;left:0;top:0;bottom:0;width:280px;background:#0f172a;color:#e5e7eb;padding:22px 18px;overflow:auto}.brand{font-size:18px;font-weight:800;line-height:1.35;margin-bottom:6px}.version{font-size:12px;color:#94a3b8;margin-bottom:22px}.nav-title{font-size:12px;color:#94a3b8;margin:18px 0 8px;text-transform:uppercase;letter-spacing:.06em}.sidebar a{display:block;color:#cbd5e1;text-decoration:none;padding:8px 10px;border-radius:8px;margin:2px 0}.sidebar a:hover,.sidebar a.active{background:#2563eb;color:#fff}.content{margin-left:280px;width:calc(100% - 280px);padding:34px 42px 80px}.hero{background:linear-gradient(135deg,#fff,#eff6ff);border:1px solid var(--line);border-radius:18px;padding:26px 30px;margin-bottom:22px}.hero h1{margin:0 0 8px;font-size:28px;letter-spacing:-.02em}.hero p{margin:6px 0;color:var(--muted)}.page{display:none;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;margin:18px 0;box-shadow:0 1px 2px rgba(15,23,42,.04)}.page.active{display:block}h2{font-size:22px;margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line)}h3{font-size:17px;margin:22px 0 10px}.mini{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}.mini strong{display:block;margin-bottom:4px}ul,ol{padding-left:20px;margin:8px 0}li{margin:4px 0}.note{border-left:4px solid var(--primary);background:var(--primary2);padding:12px 14px;border-radius:10px;margin:12px 0}.warn{border-left:4px solid #f97316;background:var(--warning);padding:12px 14px;border-radius:10px;margin:12px 0}.danger{border-left:4px solid #ef4444;background:var(--danger);padding:12px 14px;border-radius:10px;margin:12px 0}.success{border-left:4px solid #10b981;background:var(--success);padding:12px 14px;border-radius:10px;margin:12px 0}table{width:100%;border-collapse:collapse;margin:12px 0;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}th{background:#f8fafc;font-size:13px;color:#374151}tr:last-child td{border-bottom:0}code{background:#eef2ff;color:#3730a3;border-radius:6px;padding:1px 5px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px}.flowchart{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));gap:10px;align-items:stretch;margin-top:8px;margin-bottom:28px}.flow-node{position:relative;background:#f8fafc;border:1px solid #bfdbfe;border-radius:12px;padding:12px 10px;min-height:74px;display:flex;flex-direction:column;justify-content:center}.flow-node:not(:last-child)::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:#2563eb;font-weight:800}.flow-num{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;background:#2563eb;color:white;font-size:12px;font-weight:700;margin-bottom:6px}.flow-text{font-weight:700;line-height:1.35}.flowchart + h2{margin-top:30px}.api{border:1px solid #dbeafe;background:#f8fbff;border-radius:12px;margin:12px 0;overflow:hidden}.api-head{display:flex;gap:10px;align-items:center;background:#eff6ff;border-bottom:1px solid #dbeafe;padding:10px 12px;font-weight:700}.method{background:#2563eb;color:#fff;border-radius:6px;padding:2px 7px;font-size:12px}.api-body{padding:12px}.page-label{display:none}.footer{color:var(--muted);font-size:12px;margin-top:24px}.scope-red{color:#dc2626;font-weight:800;margin:8px 0 14px}@media(max-width:1280px){.flowchart{grid-template-columns:repeat(4,minmax(120px,1fr))}.flow-node:not(:last-child)::after{display:none}}@media(max-width:980px){.sidebar{position:static;width:100%;height:auto}.layout{display:block}.content{margin-left:0;width:100%;padding:22px}.flowchart{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">UCC海外站<br/>竞价车源同步需求</div>
+    <div class="version">技术阅读版 · 分页 HTML</div>
+    <div class="nav-title">1. 公共说明</div>
+    <a href="#common" data-page="common">公共说明</a>
+    <div class="nav-title">2. 提供给 UCC 接口</div>
+    <a href="#cn-list-api" data-page="cn-list-api">车辆列表接口</a>
+    <a href="#cn-detail-api" data-page="cn-detail-api">车辆详情接口</a>
+    <a href="#cn-status-api" data-page="cn-status-api">车辆状态通知</a>
+    <div class="nav-title">3. 海外功能点概要</div>
+    <a href="#overseas-list" data-page="overseas-list">列表页</a>
+    <a href="#overseas-detail" data-page="overseas-detail">详情页</a>
+    <a href="#overseas-admin" data-page="overseas-admin">海外后台</a>
+    <a href="#lead" data-page="lead">询盘线索</a>
+  </aside>
+
+  <main class="content">
+    <section class="hero">
+      <h1>UCC海外站 · 国内竞价大厅车源同步需求说明</h1>
+      <p>目标：将国内竞价大厅车源同步到海外站，经海外运营审核后展示，用于获取询价 / 找车 / 代采线索。</p>
+    </section>
+
+    <section id="common" class="page active" data-title="公共说明">
+      <h2>1. 背景说明</h2>
+      <div class="mini"><strong>本期做什么</strong>国内竞价车辆同步至海外站；海外运营审核上架；海外用户提交询价 / 找车 / 代采意向；国内状态变化后海外自动更新。</div>
+      <h3>核心原因</h3>
+      <ul>
+        <li>国内竞价周期短，海外客户决策、销售跟进、保证金确认通常来不及匹配单台车。</li>
+        <li>海外站前台应弱化“立即竞拍这台车”，强化“Find Similar Cars / Ask UCC to Source”。</li>
+        <li>线索生命周期必须独立于车辆：车辆结束、成交、流拍后，线索仍可继续跟进。</li>
+      </ul>
+
+      <h2>2. Flow 流程图</h2>
+      <div class="flowchart" aria-label="业务流程图">
+        <div class="flow-node"><span class="flow-num">1</span><span class="flow-text">国内竞价大厅<br/>在拍车源同步</span></div>
+        <div class="flow-node"><span class="flow-num">2</span><span class="flow-text">海外站接收</span></div>
+        <div class="flow-node"><span class="flow-num">3</span><span class="flow-text">硬规则校验</span></div>
+        <div class="flow-node"><span class="flow-num">4</span><span class="flow-text">车源待审核</span></div>
+        <div class="flow-node"><span class="flow-num">5</span><span class="flow-text">补充信息<br/>审核上架</span></div>
+        <div class="flow-node"><span class="flow-num">6</span><span class="flow-text">国内车辆<br/>竞价结束同步</span></div>
+        <div class="flow-node"><span class="flow-num">7</span><span class="flow-text">海外站对应<br/>下架车辆</span></div>
+      </div>
+
+      <h2>3. 通用技术规则</h2>
+      <table><thead><tr><th>规则</th><th>要求</th></tr></thead><tbody>
+        <tr><td>接口鉴权</td><td>接口需做鉴权校验，具体鉴权方式由双方技术约定，例如 Token、签名、白名单等。</td></tr>
+        <tr><td>接口方向</td><td>数据由国内系统提供给 UCC。若采用国内主动推送，则字段为请求字段；若采用 UCC 拉取，则字段为返回字段。</td></tr>
+        <tr><td>唯一键</td><td><code>domesticVehicleId + auctionId</code>。同一车辆重新上拍视为新记录。</td></tr>
+        <tr><td>价格同步</td><td>当前价不逐笔同步，按固定时间间隔同步最新价格，或详情页按需拉取。</td></tr>
+      </tbody></table>
+    </section>
+
+    <section id="cn-list-api" class="page" data-title="车辆列表接口">
+      <h2>提供给 UCC 接口一：车辆列表接口</h2>
+      <p class="scope-red">范围：竞价大厅的在拍车源，含报废车，不含有保留价拍卖、政企专场、顺序拍。</p>
+      <p>用途：提供海外站列表页所需的车辆基础字段。列表接口只提供列表展示必要信息，详情信息通过车辆详情接口获取。</p>
+      <div class="api"><div class="api-head"><span class="method">PUSH / GET</span> 车辆列表接口</div><div class="api-body"><code>/api/auction/vehicles</code><br/>支持国内按批次主动推送给 UCC；也支持 UCC 按分页、更新时间、竞价状态主动拉取车辆列表。</div></div>
+      <h3>请求方式说明</h3>
+      <table><thead><tr><th>场景</th><th>说明</th></tr></thead><tbody>
+        <tr><td>国内主动推送</td><td>国内按批次把车辆列表数据推送给 UCC。该方式下字段为请求字段 / 推送字段。</td></tr>
+        <tr><td>UCC 主动拉取</td><td>UCC 按分页、更新时间、竞价状态等条件查询国内车辆列表。该方式下字段为返回字段。</td></tr>
+      </tbody></table>
+      <h3>UCC 主动拉取查询条件</h3>
+      <table><thead><tr><th>字段</th><th>字段要求</th></tr></thead><tbody>
+        <tr><td><code>page</code></td><td>页码，从 <code>1</code> 开始。</td></tr>
+        <tr><td><code>pageSize</code></td><td>每页数量，建议由双方技术约定最大值。</td></tr>
+        <tr><td><code>updatedAfter</code></td><td>可选，按数据更新时间增量拉取，格式：<code>yyyy-MM-dd HH:mm:ss</code>。</td></tr>
+        <tr><td><code>auctionStatus</code></td><td>可选，竞价状态：预展 / 拍卖中 / 成交 / 流拍 / 取消拍卖 / 撮合中。</td></tr>
+      </tbody></table>
+      <h3>字段说明</h3>
+      <table><thead><tr><th>字段</th><th>字段要求</th></tr></thead><tbody>
+        <tr><td><code>domesticVehicleId</code></td><td>国内车辆 ID，必传。</td></tr>
+        <tr><td><code>auctionId</code></td><td>竞价 ID，必传；同一车辆重新上拍视为新场次。</td></tr>
+        <tr><td><code>vin</code></td><td>VIN 码 / 车架号，建议必传，便于车辆唯一识别与海外展示。</td></tr>
+        <tr><td><code>brandId</code></td><td>品牌 ID，必传。</td></tr>
+        <tr><td><code>seriesId</code></td><td>车系 ID，必传。</td></tr>
+        <tr><td><code>modelId</code></td><td>车型 ID，必传。</td></tr>
+        <tr><td><code>modelYear</code></td><td>年款，例如 <code>2021</code>。</td></tr>
+        <tr><td><code>coverImageUrl</code></td><td>车辆主图 URL。</td></tr>
+        <tr><td><code>cityName</code></td><td>车辆所在地城市。</td></tr>
+        <tr><td><code>registerDate</code></td><td>上牌时间，格式：<code>yyyy-MM</code> 或 <code>yyyy-MM-dd</code>。</td></tr>
+        <tr><td><code>mileage</code></td><td>表显里程，单位：<strong>km</strong>。</td></tr>
+        <tr><td><code>energyType</code></td><td>能源类型，需提供枚举值，便于海外站存储和英文翻译。建议枚举：<code>gasoline</code> 汽油 / <code>diesel</code> 柴油 / <code>hybrid</code> 混动 / <code>ev</code> 纯电 / <code>other</code> 其他。</td></tr>
+        <tr><td><code>biddingPrice</code></td><td>起拍价，单位：<strong>CNY 元</strong>。</td></tr>
+        <tr><td><code>vehicleGrade</code></td><td>车辆评分定级，例如 <code>85A</code>。</td></tr>
+        <tr><td><code>auctionEndTime</code></td><td>竞价结束时间，格式：<code>yyyy-MM-dd HH:mm:ss</code>。</td></tr>
+        <tr><td><code>domesticAuctionStatus</code></td><td>国内竞价状态：预展 / 拍卖中 / 成交 / 流拍 / 取消拍卖 / 撮合中。</td></tr>
+        <tr><td><code>updatedTime</code></td><td>数据更新时间，格式：<code>yyyy-MM-dd HH:mm:ss</code>。</td></tr>
+      </tbody></table>
+    </section>
+
+    <section id="cn-detail-api" class="page" data-title="车辆详情接口">
+      <h2>提供给 UCC 接口二：车辆详情接口</h2>
+      <p class="scope-red">范围：竞价大厅的在拍车源，含报废车，不含有保留价拍卖、政企专场、顺序拍。</p>
+      <p>用途：提供车辆详情页所需的完整车辆信息。详情接口需包含车辆列表接口的全部字段。</p>
+      <div class="api"><div class="api-head"><span class="method">PUSH / GET</span> 车辆详情接口</div><div class="api-body"><code>/api/auction/vehicles/{domesticVehicleId}/{auctionId}</code><br/>可由国内推送详情数据给 UCC，也可由 UCC 根据国内车辆 ID + 竞价 ID 查询车辆详情。</div></div>
+      <h3>字段说明</h3>
+      <table><thead><tr><th>字段组</th><th>字段</th><th>是否必传</th><th>字段要求</th></tr></thead><tbody>
+        <tr><td>唯一标识</td><td><code>domesticVehicleId</code></td><td>必传</td><td>国内车辆 ID。</td></tr>
+        <tr><td>唯一标识</td><td><code>auctionId</code></td><td>必传</td><td>竞价 ID；同一车辆重新上拍视为新竞价记录。</td></tr>
+        <tr><td>车型信息</td><td><code>brandId</code></td><td>必传</td><td>品牌 ID。</td></tr>
+        <tr><td>车型信息</td><td><code>seriesId</code></td><td>必传</td><td>车系 ID。</td></tr>
+        <tr><td>车型信息</td><td><code>modelId</code></td><td>必传</td><td>车型 ID。</td></tr>
+        <tr><td>车型信息</td><td><code>modelYear</code></td><td>必传</td><td>年款，例如 <code>2021</code>。</td></tr>
+        <tr><td>基础信息</td><td><code>coverImageUrl</code></td><td>必传</td><td>车辆主图 URL。</td></tr>
+        <tr><td>基础信息</td><td><code>cityName</code></td><td>必传</td><td>车辆所在地城市。</td></tr>
+        <tr><td>基础信息</td><td><code>registerDate</code></td><td>必传</td><td>上牌时间，格式：<code>yyyy-MM</code> 或 <code>yyyy-MM-dd</code>。</td></tr>
+        <tr><td>基础信息</td><td><code>vin</code></td><td>必传</td><td>VIN 码 / 车架号。</td></tr>
+        <tr><td>基础信息</td><td><code>manufactureDate</code></td><td>必传</td><td>出厂日期，格式：<code>yyyy-MM</code> 或 <code>yyyy-MM-dd</code>。</td></tr>
+        <tr><td>基础信息</td><td><code>vehicleProvinceName</code></td><td>必传</td><td>车辆所在地 / 车辆存放地省市。</td></tr>
+        <tr><td>基础信息</td><td><code>vehicleCityName</code></td><td>必传</td><td>车辆所在地 / 车辆存放地城市。</td></tr>
+        <tr><td>基础信息</td><td><code>compulsoryInsuranceExpireDate</code></td><td>必传</td><td>交强险到期日，格式：<code>yyyy-MM-dd</code>。</td></tr>
+        <tr><td>基础信息</td><td><code>annualInspectionExpireDate</code></td><td>必传</td><td>年审有效期，格式：<code>yyyy-MM</code>。</td></tr>
+        <tr><td>基础信息</td><td><code>mileage</code></td><td>必传</td><td>表显里程，单位：<strong>km</strong>。</td></tr>
+        <tr><td>基础信息</td><td><code>bodyColor</code></td><td>必传</td><td>车身颜色。</td></tr>
+        <tr><td>基础信息</td><td><code>gearbox</code></td><td>必传</td><td>变速箱类型，需提供枚举值，便于海外站存储和英文翻译。建议枚举：<code>mt</code> 手动 / <code>at</code> 自动 / <code>cvt</code> CVT / <code>dct</code> 双离合 / <code>amt</code> AMT / <code>other</code> 其他。</td></tr>
+        <tr><td>能源信息</td><td><code>energyType</code></td><td>必传</td><td>能源类型，需提供枚举值，便于海外站存储和英文翻译。建议枚举：<code>gasoline</code> 汽油 / <code>diesel</code> 柴油 / <code>hybrid</code> 混动 / <code>ev</code> 纯电 / <code>other</code> 其他。</td></tr>
+        <tr><td>能源信息</td><td><code>isNewEnergy</code></td><td>必传</td><td>是否新能源，true / false。</td></tr>
+        <tr><td>图片信息</td><td><code>imageList[]</code></td><td>必传</td><td>车辆基础图列表；每张图片包含 <code>url</code>、<code>sort</code>、<code>imageName</code>。</td></tr>
+        <tr><td>手续材料</td><td><code>drivingLicenseMainPageUrl</code></td><td>必传</td><td>行驶证首页图片地址。</td></tr>
+        <tr><td>手续材料</td><td><code>drivingLicenseSubPageUrl</code></td><td>必传</td><td>行驶证副页图片地址。</td></tr>
+        <tr><td>手续材料</td><td><code>registrationCertificatePage1To2Url</code></td><td>必传</td><td>登记证 1-2 页图片地址。</td></tr>
+        <tr><td>手续材料</td><td><code>registrationCertificatePage3To4Url</code></td><td>必传</td><td>登记证 3-4 页图片地址。</td></tr>
+        <tr><td>检测报告</td><td><code>vehicleGrade</code></td><td>非必传</td><td>车辆评分定级，例如 <code>85A</code>；无评分时可为空。</td></tr>
+        <tr><td>检测报告</td><td><code>englishInspectionReportUrl</code></td><td>非必传</td><td>检测报告英文版地址，可为链接或 PDF 地址；没有检测报告时可为空。</td></tr>
+        <tr><td>检测报告</td><td><code>hasEnglishReport</code></td><td>必传</td><td>是否有英文报告；缺失不阻断同步，由海外运营审核处理。</td></tr>
+        <tr><td>费用信息</td><td><code>feeTotalAmount</code></td><td>必传</td><td>费用项合计金额，单位：<strong>CNY 元</strong>；包含手续费、平台使用费、综合服务费、评估费、违章罚款、其他费用等，不需要提供费用明细项。</td></tr>
+        <tr><td>竞价信息</td><td><code>auctionType</code></td><td>必传</td><td>竞价类型，默认：<strong>竞价大厅</strong>。</td></tr>
+        <tr><td>竞价信息</td><td><code>biddingPrice</code></td><td>必传</td><td>起拍价，单位：<strong>CNY 元</strong>。</td></tr>
+        <tr><td>竞价信息</td><td><code>currentPrice</code></td><td>必传</td><td>当前价，单位：<strong>CNY 元</strong>；仅作参考价。</td></tr>
+        <tr><td>竞价信息</td><td><code>auctionEndTime</code></td><td>必传</td><td>竞价结束时间，格式：<code>yyyy-MM-dd HH:mm:ss</code>。</td></tr>
+        <tr><td>竞价信息</td><td><code>domesticAuctionStatus</code></td><td>必传</td><td>国内竞价状态：预展 / 拍卖中 / 成交 / 流拍 / 取消拍卖 / 撮合中。</td></tr>
+        <tr><td>同步信息</td><td><code>updatedTime</code></td><td>必传</td><td>数据更新时间，格式：<code>yyyy-MM-dd HH:mm:ss</code>。</td></tr>
+      </tbody></table>
+    </section>
+
+    <section id="cn-status-api" class="page" data-title="车辆状态通知">
+      <h2>提供给 UCC 接口三：车辆状态通知</h2>
+      <p class="scope-red">范围：竞价大厅的在拍车源，含报废车，不含有保留价拍卖、政企专场、顺序拍。</p>
+      <p>用途：同步国内车辆竞价状态变化，海外站根据状态更新前台展示和线索标记。</p>
+      <div class="api"><div class="api-head"><span class="method">PUSH / GET</span> 车辆状态通知</div><div class="api-body"><code>/api/auction/vehicles/status</code><br/>可采用国内主动通知 UCC，或 UCC 定时拉取状态变更列表。二选一即可。</div></div>
+      <h3>状态字段</h3>
+      <table><thead><tr><th>字段</th><th>字段要求</th></tr></thead><tbody>
+        <tr><td><code>domesticVehicleId</code></td><td>国内车辆 ID，必传。</td></tr>
+        <tr><td><code>auctionId</code></td><td>竞价 ID，必传。</td></tr>
+        <tr><td><code>status</code></td><td>国内竞价状态：预展 / 拍卖中 / 成交 / 流拍 / 取消拍卖 / 撮合中。</td></tr>
+        <tr><td><code>statusTime</code></td><td>状态发生时间，格式：<code>yyyy-MM-dd HH:mm:ss</code>。</td></tr>
+        <tr><td><code>currentPrice</code></td><td>可选，状态变化时的当前价，单位：<strong>CNY 元</strong>。</td></tr>
+        <tr><td><code>remark</code></td><td>可选，状态说明。</td></tr>
+      </tbody></table>
+    </section>
+
+    <section id="overseas-list" class="page" data-title="列表页">
+      <h2>海外功能点概要一：列表页</h2>
+      <h3>频道定位</h3>
+      <p>建议命名：<code>Sourcing Deals</code> / <code>Auction Sourcing</code>。避免直接叫 <code>Auction</code>。</p>
+
+      <h3>列表展示字段</h3>
+      <table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody>
+        <tr><td>标题</td><td>展示在主图前，用于快速识别车辆。</td></tr>
+        <tr><td>主图</td><td>车辆列表卡片展示图。</td></tr>
+        <tr><td>品牌 / 车系 / 车型 / 年款</td><td>基础展示信息。</td></tr>
+        <tr><td>车辆所在地</td><td>展示城市或地区。</td></tr>
+        <tr><td>里程</td><td>展示表显里程，单位 km。</td></tr>
+        <tr><td>能源类型</td><td>展示能源类型，海外站按枚举值做英文翻译。</td></tr>
+        <tr><td>起拍价</td><td>列表页仅展示起拍价，不展示当前价。</td></tr>
+        <tr><td>拍卖结束时间</td><td>展示拍卖结束时间；距离结束小于 24 小时时，展示倒计时。</td></tr>
+        <tr><td>车况等级</td><td>展示车辆评分定级，例如 <code>85A</code>。</td></tr>
+        <tr><td>是否有报告</td><td>展示是否有英文检测报告。</td></tr>
+        <tr><td>CTA</td><td>仅保留 <code>Details</code> / <code>Contact Us</code>。</td></tr>
+      </tbody></table>
+
+      <h3>筛选功能</h3>
+      <table><thead><tr><th>筛选项</th><th>说明</th></tr></thead><tbody>
+        <tr><td>品牌 / 车系</td><td>支持按品牌、车系筛选。</td></tr>
+        <tr><td>年款</td><td>支持按年款区间筛选。</td></tr>
+        <tr><td>起拍价</td><td>支持按起拍价区间筛选，单位 CNY 元。</td></tr>
+        <tr><td>车辆所在地</td><td>支持按城市或地区筛选。</td></tr>
+        <tr><td>里程范围</td><td>支持按里程区间筛选，单位 km。</td></tr>
+        <tr><td>车况等级</td><td>支持按车辆评分定级筛选，例如 <code>85A</code>。</td></tr>
+      </tbody></table>
+
+      <h3>排序功能</h3>
+      <table><thead><tr><th>排序项</th><th>说明</th></tr></thead><tbody>
+        <tr><td>竞价结束时间</td><td>按竞价结束时间先后排序。</td></tr>
+        <tr><td>里程数</td><td>支持从低到高、从高到低。</td></tr>
+        <tr><td>起拍价</td><td>支持从低到高、从高到低。</td></tr>
+      </tbody></table>
+
+      <h3>分页功能</h3>
+      <table><thead><tr><th>功能</th><th>说明</th></tr></thead><tbody>
+        <tr><td>分页展示</td><td>支持分页加载车辆列表。</td></tr>
+        <tr><td>每页数量</td><td>每页展示数量由海外站前端和后端约定。</td></tr>
+        <tr><td>筛选 / 排序联动</td><td>筛选或排序条件变化后，列表回到第一页重新查询。</td></tr>
+      </tbody></table>
+    </section>
+
+    <section id="overseas-detail" class="page" data-title="详情页">
+      <h2>海外功能点概要二：详情页</h2>
+      <h3>详情页展示内容</h3>
+      <table><thead><tr><th>模块</th><th>展示内容</th></tr></thead><tbody>
+        <tr><td>车辆基础信息</td><td>标题、主图 / 图片组、品牌、车系、车型、年款、VIN 码、出厂日期、车辆所在地 / 车辆存放地省市、上牌时间、表显里程、车身颜色、交强险到期日、年审有效期。</td></tr>
+        <tr><td>车辆参数</td><td>能源类型、变速箱类型、车辆评分定级、是否新能源。</td></tr>
+        <tr><td>价格信息</td><td>起拍价、费用项合计金额；不展示当前价。</td></tr>
+        <tr><td>拍卖信息</td><td>拍卖类型、拍卖结束时间；距离结束小于 24 小时时展示倒计时。</td></tr>
+        <tr><td>检测报告</td><td>是否有英文检测报告；有报告时展示检测报告英文版地址入口。</td></tr>
+        <tr><td>手续材料</td><td>行驶证首页、行驶证副页、登记证 1-2、登记证 3-4。</td></tr>
+        <tr><td>补充说明</td><td>过户说明、车辆补充描述等。</td></tr>
+        <tr><td>页面操作</td><td>保留 <code>Inquiry</code> / <code>Share</code> / <code>Favorite</code> / <code>Contact Us</code>，对应询盘、分享、收藏、联系我们。</td></tr>
+      </tbody></table>
+      <h3>详情页提示</h3>
+      <div class="note">The displayed auction price is for reference only. Final cost may include service fee, export handling fee, logistics, customs and other charges.</div>
+      <div class="warn">新能源 / 带电池车辆需提示：目的国进口与电池运输可能有限制，请先咨询。</div>
+    </section>
+
+    <section id="overseas-admin" class="page" data-title="海外后台管理">
+      <h2>海外功能点概要三：后台管理</h2>
+      <h3>模块名称</h3><p>海外后台新增：<strong>竞价车源管理</strong>。</p>
+      <h3>列表 Tab</h3><p><code>待审核</code> / <code>已上架</code> / <code>已拒绝</code> / <code>信息不完整</code> / <code>同步失败</code> / <code>已成交</code> / <code>已流拍</code> / <code>已下架</code></p>
+      <h3>列表字段</h3><ul><li>图片、车辆名称、品牌/车系/车型、当前价、剩余时间、国内状态、海外状态。</li><li>车况等级、是否新能源、可出口性标记、英文报告状态、同步时间、关联线索数。</li></ul>
+      <h3>操作</h3><table><thead><tr><th>操作</th><th>说明</th></tr></thead><tbody><tr><td>上架 / 下架</td><td>控制海外前台展示</td></tr><tr><td>拒绝展示</td><td>进入 rejected，不展示</td></tr><tr><td>重新审核</td><td>用于补充信息后再次进入待审核</td></tr><tr><td>编辑海外标题与摘要</td><td>不回写国内</td></tr><tr><td>查看检测报告</td><td>支持英文报告链接 / PDF</td></tr><tr><td>查看失败原因</td><td>展示 mapping_failed、字段异常等原因</td></tr><tr><td>查看国内拍卖链接</td><td>便于运营核对</td></tr><tr><td>查看关联线索</td><td>进入销售跟进</td></tr></tbody></table>
+    </section>
+
+    <section id="lead" class="page" data-title="询盘线索">
+      <h2>海外功能点概要四：询盘线索</h2>
+      <div class="success"><strong>原则：</strong>线索是独立对象，不依赖车辆是否仍在竞拍。</div>
+      <table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>leadId</code></td><td>线索 ID</td></tr><tr><td><code>contactName / phone / email / whatsapp</code></td><td>联系方式</td></tr><tr><td><code>destinationCountry</code></td><td>目的国</td></tr><tr><td><code>budget</code></td><td>预算</td></tr><tr><td><code>usage</code></td><td>用途</td></tr><tr><td><code>demandDescription</code></td><td>需求描述</td></tr><tr><td><code>sourceVehicleId</code> + <code>auctionId</code></td><td>来源车辆复合键</td></tr><tr><td><code>sourceVehicleSnapshot</code></td><td>线索创建时车辆信息</td></tr><tr><td><code>vehicleStatusAtLeadTime</code></td><td>线索创建时车辆状态</td></tr><tr><td><code>leadStatus</code></td><td>新建 / 已联系 / 已确认代采意向 / 转同类找车 / 已成交 / 关闭</td></tr><tr><td><code>ownerSalesId</code></td><td>归属销售</td></tr><tr><td><code>followUpRecords[]</code></td><td>跟进记录</td></tr></tbody></table>
+      <h3>线索状态联动</h3><ul><li>来源车 <code>sold</code>：线索不关闭，可转同类找车。</li><li>来源车 <code>unsold</code>：线索转同类找车需求；如为撮合失败 / 超时，可作为重点线索继续跟进。</li><li>来源车 <code>cancelled</code>：标记车辆已取消，销售继续确认客户真实需求。</li></ul>
+    </section>
+  </main>
+</div>
+<script>
+  const pages = Array.from(document.querySelectorAll('.page'));
+  const links = Array.from(document.querySelectorAll('[data-page]'));
+  function showPage(id, push=true){
+    const index = pages.findIndex(p => p.id === id);
+    const safeIndex = index >= 0 ? index : 0;
+    pages.forEach((p,i)=>p.classList.toggle('active', i===safeIndex));
+    links.forEach(a=>a.classList.toggle('active', a.dataset.page === pages[safeIndex].id));
+    document.title = pages[safeIndex].dataset.title + '｜UCC海外站需求说明';
+    if(push) history.replaceState(null, '', '#' + pages[safeIndex].id);
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+  links.forEach(a=>a.addEventListener('click', e=>{e.preventDefault();showPage(a.dataset.page);}));
+  showPage(location.hash ? location.hash.slice(1) : 'common', false);
+</script>
+</body>
+</html>
